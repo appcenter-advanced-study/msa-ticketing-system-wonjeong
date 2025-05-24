@@ -1,0 +1,6 @@
+rootProject.name = 'ticketing-system-msa-wonjeong'
+include 'discovery-service'
+include 'reservation-service'
+include 'api-service'
+include 'stock-service'
+include 'ticket-service'
