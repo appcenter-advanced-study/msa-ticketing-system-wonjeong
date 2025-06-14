@@ -3,9 +3,15 @@ package com.appcenter.reservationservice.service;
 import com.appcenter.reservationservice.client.StockClient;
 import com.appcenter.reservationservice.client.TicketClient;
 import com.appcenter.reservationservice.domain.Reservation;
+import com.appcenter.reservationservice.domain.ReservationOutBox;
 import com.appcenter.reservationservice.dto.ReservationResponse;
 import com.appcenter.reservationservice.dto.TicketResponse;
+import com.appcenter.reservationservice.event.ReservationCreatedEvent;
+import com.appcenter.reservationservice.event.ReservationEventPublisher;
+import com.appcenter.reservationservice.repository.ReservationOutBoxRepository;
 import com.appcenter.reservationservice.repository.ReservationRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +22,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationService {
     private final ReservationRepository reservationRepository;
+    private final ReservationOutBoxRepository reservationOutBoxRepository;
     private final StockClient stockClient;
     private final TicketClient ticketClient;
+    private final ReservationEventPublisher reservationEventPublisher;
+    private final ObjectMapper objectMapper;
 
     @Transactional
     public void createReservation(String username, Long ticketId) {
@@ -33,6 +42,37 @@ public class ReservationService {
         // 예약 생성
         Reservation reservation = new Reservation(username, ticketId);
         reservationRepository.save(reservation);
+
+        // 예약 생성 이벤트 생성
+        ReservationCreatedEvent reservationCreatedEvent = ReservationCreatedEvent.builder()
+                .reservationId(reservation.getId())
+                .username(username)
+                .ticketId(ticketId)
+                .build();
+
+        // 직렬화
+        String payload;
+
+        try {
+            payload = objectMapper.writeValueAsString(reservationCreatedEvent);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Outbox 직렬화 실패", e);
+        }
+
+        ReservationOutBox reservationOutBox = ReservationOutBox.builder()
+                .aggregateType("Reservation")
+                .aggregateId(reservation.getId())
+                .eventType("RESERVATION_CREATED")
+                .payload(payload)
+                .build();
+
+        reservationOutBoxRepository.save(reservationOutBox);
+    }
+
+    public void cancelReservation(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId).orElseThrow();
+        // 예약 취소 이벤트로 해당 메서드 호출시 해당 건 삭제
+        reservationRepository.delete(reservation);
     }
 
     @Transactional(readOnly = true)
