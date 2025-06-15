@@ -1,9 +1,9 @@
 package com.appcenter.reservationservice.outbox;
 
 import com.appcenter.reservationservice.domain.ReservationOutBox;
-import com.appcenter.reservationservice.event.ReservationCancelledEvent;
-import com.appcenter.reservationservice.event.ReservationCreatedEvent;
-import com.appcenter.reservationservice.event.ReservationEventPublisher;
+import com.appcenter.reservationservice.kafka.event.reservation.ReservationCancelledEvent;
+import com.appcenter.reservationservice.kafka.event.reservation.ReservationCreatedEvent;
+import com.appcenter.reservationservice.kafka.ReservationEventPublisher;
 import com.appcenter.reservationservice.repository.ReservationOutBoxRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

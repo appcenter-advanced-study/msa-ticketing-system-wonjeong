@@ -6,8 +6,8 @@ import com.appcenter.reservationservice.domain.Reservation;
 import com.appcenter.reservationservice.domain.ReservationOutBox;
 import com.appcenter.reservationservice.dto.ReservationResponse;
 import com.appcenter.reservationservice.dto.TicketResponse;
-import com.appcenter.reservationservice.event.ReservationCreatedEvent;
-import com.appcenter.reservationservice.event.ReservationEventPublisher;
+import com.appcenter.reservationservice.kafka.event.reservation.ReservationCreatedEvent;
+import com.appcenter.reservationservice.kafka.ReservationEventPublisher;
 import com.appcenter.reservationservice.repository.ReservationOutBoxRepository;
 import com.appcenter.reservationservice.repository.ReservationRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,13 +25,10 @@ public class ReservationService {
     private final ReservationOutBoxRepository reservationOutBoxRepository;
     private final StockClient stockClient;
     private final TicketClient ticketClient;
-    private final ReservationEventPublisher reservationEventPublisher;
     private final ObjectMapper objectMapper;
 
     @Transactional
     public void createReservation(String username, Long ticketId) {
-        // 재고 감소 요청
-        stockClient.decreaseStock(ticketId);
 
         try {
             Thread.sleep(500); // 락 보유 시간을 인위적으로 증가
