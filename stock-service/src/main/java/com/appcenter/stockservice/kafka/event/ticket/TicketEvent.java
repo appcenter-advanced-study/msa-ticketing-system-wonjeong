@@ -1,4 +1,4 @@
-package com.appcenter.stockservice.event;
+package com.appcenter.stockservice.kafka.event.ticket;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +7,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class StockEvent {
+public class TicketEvent {
     private LocalDateTime createdAt;
 }

@@ -16,15 +16,15 @@ spring:
         - id: reservation-service
           uri: lb://reservation-service
           predicates:
-            - Path=/reservation/**
+            - Path=/api/v1/reservation/**
         - id: stock-service
           uri: lb://stock-service
           predicates:
-            - Path=/stocks/**
+            - Path=/api/v1/stocks/**
         - id: ticket-service
           uri: lb://ticket-service
           predicates:
-            - Path=/tickets/**
+            - Path=/api/v1/tickets/**
 
 eureka:
   client:

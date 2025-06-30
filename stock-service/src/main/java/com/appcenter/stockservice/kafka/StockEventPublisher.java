@@ -1,5 +1,7 @@
-package com.appcenter.stockservice.event;
+package com.appcenter.stockservice.kafka;
 
+import com.appcenter.stockservice.kafka.event.stock.StockDecreasedEvent;
+import com.appcenter.stockservice.kafka.event.stock.StockFailedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class StockEventPublisher {
-    private final KafkaTemplate<String, StockEvent> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publishStockDecreased(StockDecreasedEvent event) {
         kafkaTemplate.send("stock.decreased", event);

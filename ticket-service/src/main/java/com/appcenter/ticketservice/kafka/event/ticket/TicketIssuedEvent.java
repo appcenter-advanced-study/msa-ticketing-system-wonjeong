@@ -1,4 +1,4 @@
-package com.appcenter.ticketservice.event;
+package com.appcenter.ticketservice.kafka.event.ticket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TicketFailedEvent extends TicketEvent{
+public class TicketIssuedEvent extends TicketEvent{
     private Long reservationId;
     private Long ticketId;
-    private String reason;
 }

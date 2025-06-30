@@ -1,4 +1,4 @@
-package com.appcenter.stockservice.event;
+package com.appcenter.stockservice.kafka.event.reservation;
 
 import lombok.*;
 

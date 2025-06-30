@@ -1,9 +1,9 @@
-package com.appcenter.ticketservice.event;
+package com.appcenter.ticketservice.kafka.event.reservation;
 
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ReservationCreatedEvent extends ReservationEvent {

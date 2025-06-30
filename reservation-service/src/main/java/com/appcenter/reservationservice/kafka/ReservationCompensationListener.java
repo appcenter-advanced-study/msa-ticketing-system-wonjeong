@@ -1,6 +1,5 @@
 package com.appcenter.reservationservice.kafka;
 
-import com.appcenter.reservationservice.kafka.event.stock.StockFailedEvent;
 import com.appcenter.reservationservice.kafka.event.ticket.TicketFailedEvent;
 import com.appcenter.reservationservice.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +21,6 @@ public class ReservationCompensationListener {
     )
     public void handleTicketIssueFailed(TicketFailedEvent event) {
         log.info("티켓 발급 실패 수신 -> 예약 취소: {}", event);
-        reservationService.cancelReservation(event.getReservationId());
-    }
-
-    @KafkaListener(
-            topics = "stock.failed",
-            groupId = "reservation-compensation-group",
-            containerFactory = "stockFailedKafkaListenerContainerFactory"
-    )
-    public void handleStockFailed(StockFailedEvent event) {
-        log.info("재고 감소 실패 → 예약 취소: {}", event);
         reservationService.cancelReservation(event.getReservationId());
     }
 }

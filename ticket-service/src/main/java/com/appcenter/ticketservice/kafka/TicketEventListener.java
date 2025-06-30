@@ -1,5 +1,8 @@
-package com.appcenter.ticketservice.event;
+package com.appcenter.ticketservice.kafka;
 
+import com.appcenter.ticketservice.kafka.event.reservation.ReservationCreatedEvent;
+import com.appcenter.ticketservice.kafka.event.ticket.TicketFailedEvent;
+import com.appcenter.ticketservice.kafka.event.ticket.TicketIssuedEvent;
 import com.appcenter.ticketservice.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +16,11 @@ public class TicketEventListener {
     private final TicketService ticketService;
     private final TicketEventPublisher ticketEventPublisher;
 
-    @KafkaListener(topics = "reservation.created", groupId = "ticket-group")
+    @KafkaListener(
+            topics = "reservation.created",
+            groupId = "ticket-group",
+            containerFactory = "reservationKafkaListenerContainerFactory"
+    )
     public void handleReservationCreated(ReservationCreatedEvent event) {
         log.info("예약 생성 이벤트 수신: {}", event);
 
@@ -31,7 +38,7 @@ public class TicketEventListener {
             TicketFailedEvent failedEvent = TicketFailedEvent.builder()
                     .reservationId(event.getReservationId())
                     .ticketId(event.getTicketId())
-                    .reason("발급 실패!")
+                    .reason("티켓 발급 문제로 인해 티켓 발급 실패!")
                     .build();
             ticketEventPublisher.publishTicketFailed(failedEvent);
         }
