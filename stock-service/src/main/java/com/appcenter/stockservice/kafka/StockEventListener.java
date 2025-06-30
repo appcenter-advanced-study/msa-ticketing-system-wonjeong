@@ -29,10 +29,10 @@ public class StockEventListener {
             log.info("티켓 발급 이벤트 수신: {}", event);
 
             boolean simulate = this.simulateDecreaseStock();
-
+            log.info("시뮬레이트 값 : " + simulate);
             if (simulate) {
                 try {
-                    stockService.decreaseStock(event.getReservationId());
+                    stockService.decreaseStock(event.getTicketId());
                     StockDecreasedEvent decreasedEvent = StockDecreasedEvent.builder()
                             .reservationId(event.getReservationId())
                             .ticketId(event.getTicketId())
@@ -62,6 +62,7 @@ public class StockEventListener {
     }
 
     private boolean simulateDecreaseStock() {
-        return Math.random() > 0.1;
+        final double SUCCESS_RATE = 0.9; // 성공 확률 90%
+        return Math.random() < SUCCESS_RATE;
     }
 }
