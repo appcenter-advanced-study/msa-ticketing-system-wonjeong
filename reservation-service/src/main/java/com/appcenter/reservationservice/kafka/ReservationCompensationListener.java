@@ -1,6 +1,6 @@
 package com.appcenter.reservationservice.kafka;
 
-import com.appcenter.reservationservice.kafka.event.ticket.TicketFailedEvent;
+import com.appcenter.event.ticket.TicketFailedEvent;
 import com.appcenter.reservationservice.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.appcenter.stockservice.kafka.event.ticket;
+package com.appcenter.event.ticket;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

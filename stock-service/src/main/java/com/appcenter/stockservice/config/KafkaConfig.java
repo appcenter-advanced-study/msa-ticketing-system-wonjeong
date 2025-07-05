@@ -1,6 +1,6 @@
 package com.appcenter.stockservice.config;
 
-import com.appcenter.stockservice.kafka.event.ticket.TicketIssuedEvent;
+import com.appcenter.event.ticket.TicketIssuedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

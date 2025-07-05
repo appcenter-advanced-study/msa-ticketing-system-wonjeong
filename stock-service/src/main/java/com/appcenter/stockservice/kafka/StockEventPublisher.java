@@ -1,7 +1,7 @@
 package com.appcenter.stockservice.kafka;
 
-import com.appcenter.stockservice.kafka.event.stock.StockDecreasedEvent;
-import com.appcenter.stockservice.kafka.event.stock.StockFailedEvent;
+import com.appcenter.event.stock.StockDecreasedEvent;
+import com.appcenter.event.stock.StockFailedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

@@ -1,13 +1,12 @@
 package com.appcenter.reservationservice.service;
 
+import com.appcenter.event.reservation.ReservationCreatedEvent;
 import com.appcenter.reservationservice.client.StockClient;
 import com.appcenter.reservationservice.client.TicketClient;
 import com.appcenter.reservationservice.domain.Reservation;
 import com.appcenter.reservationservice.domain.ReservationOutBox;
 import com.appcenter.reservationservice.dto.ReservationResponse;
 import com.appcenter.reservationservice.dto.TicketResponse;
-import com.appcenter.reservationservice.kafka.event.reservation.ReservationCreatedEvent;
-import com.appcenter.reservationservice.kafka.ReservationEventPublisher;
 import com.appcenter.reservationservice.repository.ReservationOutBoxRepository;
 import com.appcenter.reservationservice.repository.ReservationRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;

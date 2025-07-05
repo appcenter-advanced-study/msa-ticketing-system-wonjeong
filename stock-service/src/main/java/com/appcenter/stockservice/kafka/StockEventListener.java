@@ -1,8 +1,8 @@
 package com.appcenter.stockservice.kafka;
 
-import com.appcenter.stockservice.kafka.event.stock.StockDecreasedEvent;
-import com.appcenter.stockservice.kafka.event.stock.StockFailedEvent;
-import com.appcenter.stockservice.kafka.event.ticket.TicketIssuedEvent;
+import com.appcenter.event.stock.StockDecreasedEvent;
+import com.appcenter.event.stock.StockFailedEvent;
+import com.appcenter.event.ticket.TicketIssuedEvent;
 import com.appcenter.stockservice.service.StockService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

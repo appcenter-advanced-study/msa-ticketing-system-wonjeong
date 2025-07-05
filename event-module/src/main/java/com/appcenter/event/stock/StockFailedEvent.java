@@ -1,4 +1,4 @@
-package com.appcenter.reservationservice.kafka.event.stock;
+package com.appcenter.event.stock;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

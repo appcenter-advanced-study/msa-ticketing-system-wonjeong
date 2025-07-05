@@ -1,6 +1,7 @@
-package com.appcenter.reservationservice.kafka.event.reservation;
+package com.appcenter.event.reservation;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

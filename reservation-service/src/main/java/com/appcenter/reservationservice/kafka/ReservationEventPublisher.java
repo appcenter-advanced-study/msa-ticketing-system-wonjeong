@@ -1,7 +1,7 @@
 package com.appcenter.reservationservice.kafka;
 
-import com.appcenter.reservationservice.kafka.event.reservation.ReservationCancelledEvent;
-import com.appcenter.reservationservice.kafka.event.reservation.ReservationCreatedEvent;
+import com.appcenter.event.reservation.ReservationCancelledEvent;
+import com.appcenter.event.reservation.ReservationCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.appcenter.stockservice.kafka.event.stock;
+package com.appcenter.event.ticket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StockDecreasedEvent extends StockEvent {
+public class TicketIssuedEvent extends TicketEvent{
     private Long reservationId;
     private Long ticketId;
 }

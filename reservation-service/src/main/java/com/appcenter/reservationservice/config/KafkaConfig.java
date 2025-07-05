@@ -1,7 +1,7 @@
 package com.appcenter.reservationservice.config;
 
-import com.appcenter.reservationservice.kafka.event.stock.StockFailedEvent;
-import com.appcenter.reservationservice.kafka.event.ticket.TicketFailedEvent;
+import com.appcenter.event.stock.StockFailedEvent;
+import com.appcenter.event.ticket.TicketFailedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
