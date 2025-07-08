@@ -1,0 +1,23 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: query-service
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: redis
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ticketing_system_read?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: test1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

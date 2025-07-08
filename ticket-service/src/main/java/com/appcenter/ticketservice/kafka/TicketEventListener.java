@@ -3,7 +3,6 @@ package com.appcenter.ticketservice.kafka;
 import com.appcenter.ticketservice.kafka.event.reservation.ReservationCreatedEvent;
 import com.appcenter.ticketservice.kafka.event.ticket.TicketFailedEvent;
 import com.appcenter.ticketservice.kafka.event.ticket.TicketIssuedEvent;
-import com.appcenter.ticketservice.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TicketEventListener {
-    private final TicketService ticketService;
     private final TicketEventPublisher ticketEventPublisher;
 
     @KafkaListener(

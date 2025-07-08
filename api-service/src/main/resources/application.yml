@@ -17,14 +17,22 @@ spring:
           uri: lb://reservation-service
           predicates:
             - Path=/api/v1/reservation/**
+            - Method=POST, PUT, DELETE
         - id: stock-service
           uri: lb://stock-service
           predicates:
             - Path=/api/v1/stocks/**
+            - Method=POST, PUT, DELETE
         - id: ticket-service
           uri: lb://ticket-service
           predicates:
             - Path=/api/v1/tickets/**
+            - Method=POST, PUT, DELETE
+        - id: query-service
+          uri: lb://query-service
+          predicates:
+            - Path=/api/v1/queries/**
+            - Method=GET
 
 eureka:
   client:
