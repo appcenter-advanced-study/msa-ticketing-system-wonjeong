@@ -3,6 +3,8 @@ package com.appcenter.stockservice.kafka;
 import com.appcenter.event.stock.StockDecreasedEvent;
 import com.appcenter.event.stock.StockFailedEvent;
 import com.appcenter.event.ticket.TicketIssuedEvent;
+import com.appcenter.stockservice.domain.Stock;
+import com.appcenter.stockservice.repository.StockRepository;
 import com.appcenter.stockservice.service.StockService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -10,14 +12,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class StockEventListener {
     private final StockService stockService;
+    private final StockRepository stockRepository;
     private final StockEventPublisher stockEventPublisher;
 
+    @Transactional
     @KafkaListener(topics = "ticket.issued", groupId = "stock-group")
     public void handleTicketIssued(String message) {
         try {
@@ -31,21 +38,15 @@ public class StockEventListener {
             boolean simulate = this.simulateDecreaseStock();
             log.info("시뮬레이트 값 : " + simulate);
             if (simulate) {
-                try {
-                    stockService.decreaseStock(event.getTicketId());
-                    StockDecreasedEvent decreasedEvent = StockDecreasedEvent.builder()
-                            .reservationId(event.getReservationId())
-                            .ticketId(event.getTicketId())
-                            .build();
-                    stockEventPublisher.publishStockDecreased(decreasedEvent);
-                } catch (Exception e) {
-                    StockFailedEvent failedEvent = StockFailedEvent.builder()
-                            .reservationId(event.getReservationId())
-                            .ticketId(event.getTicketId())
-                            .reason(e.getMessage())
-                            .build();
-                    stockEventPublisher.publishStockFailed(failedEvent);
-                }
+                stockService.decreaseStock(event.getTicketId());
+                Stock stock = stockRepository.findByTicketId(event.getTicketId());
+                StockDecreasedEvent decreasedEvent = StockDecreasedEvent.builder()
+                        .reservationId(event.getReservationId())
+                        .ticketId(event.getTicketId())
+                        .remainingQuantity(stock.getQuantity())
+                        .decreasedAt(LocalDateTime.now())
+                        .build();
+                stockEventPublisher.publishStockDecreased(decreasedEvent);
             } else {
                 StockFailedEvent failedEvent = StockFailedEvent.builder()
                         .reservationId(event.getReservationId())
